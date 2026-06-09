@@ -6,6 +6,21 @@ Built with [Wails](https://wails.io) (Go + vanilla JS, no frameworks). Dark UI. 
 
 > 🇬🇧 English below · 🇷🇺 Русская версия ниже
 
+### Screenshots
+
+<table>
+  <tr>
+    <td align="center"><a href="screenshots/1.png"><img src="screenshots/1.png" width="380" alt="Schedule"></a><br><sub>Schedule</sub></td>
+    <td align="center"><a href="screenshots/2.png"><img src="screenshots/2.png" width="380" alt="Bracket"></a><br><sub>Bracket</sub></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="screenshots/3.png"><img src="screenshots/3.png" width="380" alt="Groups"></a><br><sub>Groups</sub></td>
+    <td align="center"><a href="screenshots/4.png"><img src="screenshots/4.png" width="380" alt="Predictions"></a><br><sub>Predictions</sub></td>
+  </tr>
+</table>
+
+<sub>Click a screenshot to open it full size.</sub>
+
 ---
 
 ## 🇬🇧 English
