@@ -1,0 +1,26 @@
+# Сборка (скомпилированный .app)
+build/bin/
+
+# Зависимости и сборка фронтенда
+node_modules/
+frontend/dist/
+
+# Данные приложения (results.json лежит рядом с бинарником)
+results.json
+
+# Временные файлы атомарного сохранения (app.go SaveResults)
+*.tmp
+
+# macOS
+.DS_Store
+
+# Редактор / локальные инструменты
+.claude/
+.vscode/
+.idea/
+
+# Внутренние рабочие файлы — не для публичного репозитория
+_inner/
+
+# Windows packaging — проект только под macOS
+build/windows/
