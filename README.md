@@ -1,6 +1,6 @@
 # ЧМ-2026 · FIFA World Cup 2026 Match Tracker
 
-A small, fast **macOS desktop app** for following the 2026 FIFA World Cup: browse the full schedule in your own timezone, enter scores, make predictions, and watch the knockout bracket and group tables fill in automatically — all offline, with results saved next to the app.
+A small, fast **macOS desktop app** for following the 2026 FIFA World Cup: browse the full schedule in your own timezone, follow live scores, make predictions, and watch the knockout bracket and group tables fill in automatically. Scores sync automatically from an open online source, and the app still works fully offline — you can always enter scores by hand. Everything is saved next to the app.
 
 Built with [Wails](https://wails.io) (Go + vanilla JS, no frameworks). Dark UI. 6 languages.
 
@@ -27,7 +27,8 @@ Built with [Wails](https://wails.io) (Go + vanilla JS, no frameworks). Dark UI. 
 
 ### Features
 - **Schedule** with a date carousel that auto-scrolls to today; live matches show an **Online** badge and a blinking score.
-- **Score entry** with instant autosave (no buttons, no confirmations).
+- **Live scores** — match scores and online/finished status are pulled automatically from an open online source (auto-refresh while a match is live, plus a manual refresh button); your predictions and any manual edits are kept.
+- **Score entry** with instant autosave (no buttons, no confirmations) — edit any result by hand for what-if scenarios; a refresh pulls the real score back.
 - **Predictions** — enter your forecast above each score; a stats page tracks exact hits / correct outcomes / misses and points.
 - **Knockout bracket** — a real two-sided tree that fills in automatically from results, with official FIFA naming and hover tooltips for every slot.
 - **Group tables** with the official **FIFA 2026 tie-breakers** (head-to-head → goal difference → goals scored …) and best-third-placed-teams ranking + allocation.
@@ -84,11 +85,12 @@ gh release create vX.Y.Z wc2026-vX.Y.Z-macos-arm64.zip -t "vX.Y.Z" -n "Changelog
 
 ## 🇷🇺 Русский
 
-**ЧМ-2026** — небольшое десктоп-приложение для macOS, чтобы следить за чемпионатом мира 2026: всё расписание в вашем часовом поясе, ввод счёта, прогнозы, а сетка плей-офф и таблицы групп заполняются автоматически. Работает офлайн, результаты сохраняются рядом с приложением. Сделано на [Wails](https://wails.io) (Go + ванильный JS). Тёмная тема, 6 языков.
+**ЧМ-2026** — небольшое десктоп-приложение для macOS, чтобы следить за чемпионатом мира 2026: всё расписание в вашем часовом поясе, живой счёт, прогнозы, а сетка плей-офф и таблицы групп заполняются автоматически. Счёт подтягивается из открытого онлайн-источника, при этом приложение полностью работает и офлайн — счёт всегда можно ввести вручную. Результаты сохраняются рядом с приложением. Сделано на [Wails](https://wails.io) (Go + ванильный JS). Тёмная тема, 6 языков.
 
 ### Возможности
 - **Расписание** с каруселью дат и автопрокруткой к сегодняшнему дню; у идущих матчей — бейдж **Онлайн** и моргающий счёт.
-- **Ввод счёта** с мгновенным автосохранением (без кнопок и подтверждений).
+- **Живой счёт** — счёт и статус матчей (идёт/завершён) подтягиваются автоматически из открытого онлайн-источника (автообновление во время матча + кнопка обновления вручную); ваши прогнозы и ручные правки сохраняются.
+- **Ввод счёта** с мгновенным автосохранением (без кнопок и подтверждений) — любой результат можно поправить руками для «что если»; обновление вернёт реальный счёт.
 - **Прогнозы** — вписываете прогноз над счётом; на странице статистики считаются точные попадания / угаданные исходы / промахи и очки.
 - **Сетка плей-офф** — настоящее двустороннее дерево, заполняется автоматически по результатам; официальные названия FIFA и подсказки по каждому слоту.
 - **Таблицы групп** по официальным **тай-брейкам FIFA 2026** (личные встречи → разница мячей → забитые …) с ранжированием и распределением лучших третьих мест.

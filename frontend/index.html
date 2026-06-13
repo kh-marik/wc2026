@@ -32,6 +32,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,sans-serif;ba
 .chrome-right{display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:flex-end}
 .settings{display:flex;gap:2px;padding:3px;border-radius:11px;background:var(--bg1);border:1px solid var(--line)}
 .cfg{-webkit-appearance:none;appearance:none;background-color:transparent;border:none;color:var(--tp);font-size:13px;font-weight:500;padding:9px 32px 9px 13px;border-radius:8px;cursor:pointer;outline:none;background-repeat:no-repeat;background-position:right 11px center;background-size:11px;background-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='12'%20height='12'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='%239A9C9F'%20stroke-width='2.2'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpolyline%20points='6%209%2012%2015%2018%209'/%3E%3C/svg%3E")}
+.sync{display:flex;align-items:center;gap:8px}
+.sync-info{font-size:12px;color:var(--ts);white-space:nowrap}
+.sync-info.err{color:#E0392B}
+.sync-btn{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;padding:0;background:var(--bg1);border:1px solid var(--line);border-radius:11px;color:var(--tp);font-size:17px;line-height:1;cursor:pointer;outline:none}
+.sync-btn:hover{background:var(--bg2)}
+.sync-btn.busy{animation:spin .8s linear infinite;pointer-events:none;color:var(--ts)}
+@keyframes spin{to{transform:rotate(360deg)}}
 .cfg:hover{background-color:var(--bg2)}
 .cfg:focus{background-color:var(--bg2)}
 .cfg option{background:var(--bg2);color:var(--tp)}
@@ -193,6 +200,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,sans-serif;ba
       </div>
     </div>
     <div class="chrome-right">
+      <div class="sync">
+        <span class="sync-info" id="sync-info"></span>
+        <button class="sync-btn" id="sync-btn" onclick="syncScores(true)" title="Обновить счёт с SofaScore">⟳</button>
+      </div>
       <div class="settings">
         <select class="cfg" id="tz-select" onchange="onTzChange(this.value)"></select>
         <select class="cfg" id="lang-select" onchange="onLangChange(this.value)"></select>
@@ -240,6 +251,16 @@ const I18N = {
   es: {title:"Copa Mundial de la FIFA 2026",dateRange:"11 jun – 19 jul 2026",timesLocal:"hora local",tab_schedule:"Calendario",tab_bracket:"Cuadro",tab_groups:"Grupos",tab_stats:"Pronósticos",live:"En línea",pred_caption:"tu pronóstico",stage_r32:"Dieciseisavos de final",stage_r16:"Octavos de final",stage_qf:"Cuartos de final",stage_sf:"Semifinales",stage_final:"Final",stage_3p:"Tercer puesto",third_place_match:"Partido por el tercer puesto",pos1:"1.º",pos2:"2.º",third_prefix:"3.º",winner_abbr:"G",loser_abbr:"P",tt_group_winner:"Ganador del grupo {g}",tt_group_runner:"Segundo del grupo {g}",tt_third:"Mejor tercer equipo de los grupos {list} (los 8 mejores terceros avanzan)",tt_winner_match:"Ganador del partido #{n} · {stage}",tt_loser_match:"Perdedor del partido #{n} · {stage}",group:"Grupo",team:"Equipo",col_P:"PJ",col_W:"G",col_D:"E",col_L:"P",col_GF:"GF",col_GA:"GC",col_Pts:"Pts",stats_title:"Estadísticas de pronósticos",stats_points:"puntos · exacto ×3, resultado ×1",stats_accuracy:"acertados · exacto + resultado",stats_made:"pronósticos hechos · de {n}",stats_evaluated:"partidos evaluados",stats_exact:"marcador exacto",stats_outcome:"resultado acertado",stats_miss:"fallado",stats_dist:"Distribución de los pronósticos evaluados",stats_empty:"Introduce tu pronóstico en los campos sobre el marcador y luego el marcador real. Tus estadísticas aparecerán aquí.",stats_made_note:"Pronósticos hechos: {n}. Esperando los resultados de los partidos jugados.",chip_exact:"✓ marcador exacto",chip_outcome:"≈ resultado",chip_miss:"✗ fallado",settings_timezone:"Zona horaria",settings_language:"Idioma"},
   "zh-Hant": {title:"2026 國際足協世界盃",dateRange:"2026 年 6 月 11 日 – 7 月 19 日",timesLocal:"當地時間",tab_schedule:"賽程",tab_bracket:"對陣表",tab_groups:"分組",tab_stats:"預測",live:"線上",pred_caption:"你的預測",stage_r32:"32 強賽",stage_r16:"16 強賽",stage_qf:"半準決賽",stage_sf:"準決賽",stage_final:"決賽",stage_3p:"季軍",third_place_match:"季軍賽",pos1:"第1",pos2:"第2",third_prefix:"第3",winner_abbr:"勝",loser_abbr:"負",tt_group_winner:"{g} 組第一名",tt_group_runner:"{g} 組第二名",tt_third:"{list} 組中最佳的第三名球隊（8 支最佳第三名晉級）",tt_winner_match:"第 {n} 號賽事勝方 · {stage}",tt_loser_match:"第 {n} 號賽事負方 · {stage}",group:"分組",team:"球隊",col_P:"賽",col_W:"勝",col_D:"和",col_L:"負",col_GF:"入",col_GA:"失",col_Pts:"分",stats_title:"預測統計",stats_points:"分 · 準確 ×3，結果 ×1",stats_accuracy:"命中 · 準確 + 結果",stats_made:"已做預測 · 共 {n} 場",stats_evaluated:"已評估賽事",stats_exact:"準確比分",stats_outcome:"命中結果",stats_miss:"未命中",stats_dist:"已評估預測的分佈",stats_empty:"在比分上方的欄位輸入你的預測，再輸入實際比分。你的統計將顯示於此。",stats_made_note:"已做預測：{n}。等待已賽賽事的結果。",chip_exact:"✓ 準確比分",chip_outcome:"≈ 結果",chip_miss:"✗ 未命中",settings_timezone:"時區",settings_language:"語言"}
 };
+// строки блока синхронизации со счётом (дописываем, чтобы не раздувать строки I18N)
+const SYNC_I18N = {
+  en:{sync_updated:"updated {t}",sync_offline:"offline",sync_title:"Refresh scores from SofaScore"},
+  ru:{sync_updated:"обновлено {t}",sync_offline:"нет связи",sync_title:"Обновить счёт с SofaScore"},
+  de:{sync_updated:"aktualisiert {t}",sync_offline:"keine Verbindung",sync_title:"Spielstände von SofaScore aktualisieren"},
+  fr:{sync_updated:"mis à jour {t}",sync_offline:"hors ligne",sync_title:"Actualiser les scores depuis SofaScore"},
+  es:{sync_updated:"actualizado {t}",sync_offline:"sin conexión",sync_title:"Actualizar marcadores desde SofaScore"},
+  "zh-Hant":{sync_updated:"已更新 {t}",sync_offline:"無連線",sync_title:"從 SofaScore 更新比分"}
+};
+Object.keys(SYNC_I18N).forEach(l => Object.assign(I18N[l], SYNC_I18N[l]));
 const TEAMS = {
   "Мексика":{en:"Mexico",de:"Mexiko",fr:"Mexique",es:"México","zh-Hant":"墨西哥"},"ЮАР":{en:"South Africa",de:"Südafrika",fr:"Afrique du Sud",es:"Sudáfrica","zh-Hant":"南非"},"Корея":{en:"South Korea",de:"Südkorea",fr:"Corée du Sud",es:"Corea del Sur","zh-Hant":"南韓"},"Чехия":{en:"Czechia",de:"Tschechien",fr:"Tchéquie",es:"Chequia","zh-Hant":"捷克"},"Канада":{en:"Canada",de:"Kanada",fr:"Canada",es:"Canadá","zh-Hant":"加拿大"},"Босния":{en:"Bosnia and Herzegovina",de:"Bosnien und Herzegowina",fr:"Bosnie-Herzégovine",es:"Bosnia y Herzegovina","zh-Hant":"波士尼亞與赫塞哥維納"},"Катар":{en:"Qatar",de:"Katar",fr:"Qatar",es:"Catar","zh-Hant":"卡達"},"Швейцария":{en:"Switzerland",de:"Schweiz",fr:"Suisse",es:"Suiza","zh-Hant":"瑞士"},"Бразилия":{en:"Brazil",de:"Brasilien",fr:"Brésil",es:"Brasil","zh-Hant":"巴西"},"Марокко":{en:"Morocco",de:"Marokko",fr:"Maroc",es:"Marruecos","zh-Hant":"摩洛哥"},"Гаити":{en:"Haiti",de:"Haiti",fr:"Haïti",es:"Haití","zh-Hant":"海地"},"Шотландия":{en:"Scotland",de:"Schottland",fr:"Écosse",es:"Escocia","zh-Hant":"蘇格蘭"},"США":{en:"United States",de:"USA",fr:"États-Unis",es:"Estados Unidos","zh-Hant":"美國"},"Парагвай":{en:"Paraguay",de:"Paraguay",fr:"Paraguay",es:"Paraguay","zh-Hant":"巴拉圭"},"Австралия":{en:"Australia",de:"Australien",fr:"Australie",es:"Australia","zh-Hant":"澳洲"},"Турция":{en:"Türkiye",de:"Türkei",fr:"Turquie",es:"Turquía","zh-Hant":"土耳其"},"Германия":{en:"Germany",de:"Deutschland",fr:"Allemagne",es:"Alemania","zh-Hant":"德國"},"Кюрасао":{en:"Curaçao",de:"Curaçao",fr:"Curaçao",es:"Curazao","zh-Hant":"庫拉索"},"Кот-д'Ивуар":{en:"Ivory Coast",de:"Elfenbeinküste",fr:"Côte d'Ivoire",es:"Costa de Marfil","zh-Hant":"象牙海岸"},"Эквадор":{en:"Ecuador",de:"Ecuador",fr:"Équateur",es:"Ecuador","zh-Hant":"厄瓜多"},"Нидерланды":{en:"Netherlands",de:"Niederlande",fr:"Pays-Bas",es:"Países Bajos","zh-Hant":"荷蘭"},"Япония":{en:"Japan",de:"Japan",fr:"Japon",es:"Japón","zh-Hant":"日本"},"Швеция":{en:"Sweden",de:"Schweden",fr:"Suède",es:"Suecia","zh-Hant":"瑞典"},"Тунис":{en:"Tunisia",de:"Tunesien",fr:"Tunisie",es:"Túnez","zh-Hant":"突尼西亞"},"Бельгия":{en:"Belgium",de:"Belgien",fr:"Belgique",es:"Bélgica","zh-Hant":"比利時"},"Египет":{en:"Egypt",de:"Ägypten",fr:"Égypte",es:"Egipto","zh-Hant":"埃及"},"Иран":{en:"Iran",de:"Iran",fr:"Iran",es:"Irán","zh-Hant":"伊朗"},"Новая Зеландия":{en:"New Zealand",de:"Neuseeland",fr:"Nouvelle-Zélande",es:"Nueva Zelanda","zh-Hant":"紐西蘭"},"Испания":{en:"Spain",de:"Spanien",fr:"Espagne",es:"España","zh-Hant":"西班牙"},"Кабо-Верде":{en:"Cape Verde",de:"Kap Verde",fr:"Cap-Vert",es:"Cabo Verde","zh-Hant":"維德角"},"Саудовская Аравия":{en:"Saudi Arabia",de:"Saudi-Arabien",fr:"Arabie saoudite",es:"Arabia Saudí","zh-Hant":"沙烏地阿拉伯"},"Уругвай":{en:"Uruguay",de:"Uruguay",fr:"Uruguay",es:"Uruguay","zh-Hant":"烏拉圭"},"Франция":{en:"France",de:"Frankreich",fr:"France",es:"Francia","zh-Hant":"法國"},"Сенегал":{en:"Senegal",de:"Senegal",fr:"Sénégal",es:"Senegal","zh-Hant":"塞內加爾"},"Ирак":{en:"Iraq",de:"Irak",fr:"Irak",es:"Irak","zh-Hant":"伊拉克"},"Норвегия":{en:"Norway",de:"Norwegen",fr:"Norvège",es:"Noruega","zh-Hant":"挪威"},"Аргентина":{en:"Argentina",de:"Argentinien",fr:"Argentine",es:"Argentina","zh-Hant":"阿根廷"},"Алжир":{en:"Algeria",de:"Algerien",fr:"Algérie",es:"Argelia","zh-Hant":"阿爾及利亞"},"Австрия":{en:"Austria",de:"Österreich",fr:"Autriche",es:"Austria","zh-Hant":"奧地利"},"Иордания":{en:"Jordan",de:"Jordanien",fr:"Jordanie",es:"Jordania","zh-Hant":"約旦"},"Португалия":{en:"Portugal",de:"Portugal",fr:"Portugal",es:"Portugal","zh-Hant":"葡萄牙"},"DR Конго":{en:"DR Congo",de:"DR Kongo",fr:"RD Congo",es:"RD Congo","zh-Hant":"民主剛果"},"Узбекистан":{en:"Uzbekistan",de:"Usbekistan",fr:"Ouzbékistan",es:"Uzbekistán","zh-Hant":"烏茲別克"},"Колумбия":{en:"Colombia",de:"Kolumbien",fr:"Colombie",es:"Colombia","zh-Hant":"哥倫比亞"},"Англия":{en:"England",de:"England",fr:"Angleterre",es:"Inglaterra","zh-Hant":"英格蘭"},"Хорватия":{en:"Croatia",de:"Kroatien",fr:"Croatie",es:"Croacia","zh-Hant":"克羅埃西亞"},"Гана":{en:"Ghana",de:"Ghana",fr:"Ghana",es:"Ghana","zh-Hant":"迦納"},"Панама":{en:"Panama",de:"Panama",fr:"Panama",es:"Panamá","zh-Hant":"巴拿馬"}
 };
@@ -371,6 +392,31 @@ const MATCHES = [
 
 const byId = {};
 MATCHES.forEach(m => byId[m.id] = m);
+
+// ===== SofaScore event id для каждого матча (см. scores.go) =====
+// Собрано один раз: группы — по парам команд, плей-офф — по слотам. Биекция 104↔104.
+const SS_EVENT_ID = {
+  gs1:15186710, gs2:15186720, gs3:15186836, gs4:15186873, gs5:15186526, gs6:15186850,
+  gs7:15186853, gs8:15186874, gs9:15186899, gs10:15186945, gs11:15186904, gs12:15186951,
+  gs13:15186783, gs14:15186837, gs15:15186811, gs16:15186832, gs17:15186501, gs18:15186773,
+  gs19:15186854, gs20:15186751, gs21:15186709, gs22:15186504, gs23:15186687, gs24:15186722,
+  gs25:15186731, gs26:15186806, gs27:15186798, gs28:15186490, gs29:15186878, gs30:15186859,
+  gs31:15186856, gs32:15186879, gs33:15186957, gs34:15186905, gs35:15186906, gs36:15186963,
+  gs37:15186840, gs38:15186499, gs39:15186800, gs40:15186827, gs41:15186502, gs42:15186769,
+  gs43:15186770, gs44:15186740, gs45:15186858, gs46:15186672, gs47:15186520, gs48:15186713,
+  gs49:15186821, gs50:15186829, gs51:15186861, gs52:15186864, gs53:15186732, gs54:15186744,
+  gs55:15186908, gs56:15186907, gs57:15186972, gs58:15186973, gs59:15186887, gs60:15186891,
+  gs61:15186537, gs62:15186771, gs63:15186803, gs64:15186841, gs65:15186828, gs66:15186822,
+  gs67:15186676, gs68:15186624, gs69:15186696, gs70:15186717, gs71:15186747, gs72:15186734,
+  m73:12813000, m74:12813014, m75:12812998, m76:12813012, m77:12812995, m78:12812989,
+  m79:12813001, m80:12813020, m81:12812992, m82:12813013, m83:12812997, m84:12813004,
+  m85:12813019, m86:12812999, m87:12813011, m88:12813018, m89:12813010, m90:12813009,
+  m91:12813006, m92:12813007, m93:12812990, m94:12813002, m95:12812993, m96:12812991,
+  m97:12813016, m98:12812994, m99:12813017, m100:12813015, m101:12813008, m102:12812996,
+  m103:12813003, m104:12813005,
+};
+const APP_ID_BY_EVENT = {};
+Object.keys(SS_EVENT_ID).forEach(appId => { APP_ID_BY_EVENT[SS_EVENT_ID[appId]] = appId; });
 
 // нумерация матчей по стадиям + локализованные названия стадий
 const FRAC = {r32:'1/32', r16:'1/16', qf:'1/4', sf:'1/2'};
@@ -672,6 +718,8 @@ function matchStartMs(etStr){
   return Date.UTC(Y, Mo - 1, D, h, mi) + 4 * 3600 * 1000; // ET = UTC−4 → абсолютный момент старта
 }
 function isLive(m){
+  // после первой успешной синхронизации доверяем статусу SofaScore
+  if(SYNC_DONE) return !!(results[m.id] && results[m.id].live === true);
   const s = matchStartMs(m.et);
   const t = now();
   return t >= s && t < s + LIVE_DURATION_MS;
@@ -993,6 +1041,9 @@ function applyStaticTexts(){
   document.getElementById('app-title').textContent = t('title');
   document.getElementById('app-sub').textContent = t('dateRange') + ' · ' + t('timesLocal') + ' (' + tzCity(SETTINGS.tz) + ')';
   document.querySelectorAll('.seg').forEach(s => { s.textContent = t('tab_' + s.dataset.tab); });
+  const sb = document.getElementById('sync-btn');
+  if(sb) sb.title = t('sync_title');
+  renderSyncInfo();
 }
 function saveSettings(){
   try { window.go.main.App.SaveSettings(JSON.stringify(SETTINGS)).catch(console.error); } catch(e){}
@@ -1010,6 +1061,79 @@ function renderAll(){
 }
 function onTzChange(v){ SETTINGS.tz = v; saveSettings(); renderAll(); }
 function onLangChange(v){ SETTINGS.lang = v; saveSettings(); renderAll(); }
+
+// ===== Синхронизация счёта с SofaScore (через Go-биндинг App.FetchScores) =====
+let SYNC_DONE = false;   // была ли хотя бы одна успешная синхронизация
+let SYNCING = false;     // защита от параллельных запросов
+let HAS_LIVE = false;    // есть ли идущий матч (определяет частоту опроса)
+function pad2(n){ return n < 10 ? '0' + n : '' + n; }
+let LAST_SYNC = null;    // Date последней успешной синхронизации (для перелокализации подписи)
+let SYNC_ERR = false;    // показывать ли «нет связи»
+// Перерисовывает подпись синхронизации на текущем языке (вызывается и при смене языка)
+function renderSyncInfo(){
+  const el = document.getElementById('sync-info');
+  if(!el) return;
+  if(SYNC_ERR){ el.textContent = t('sync_offline'); el.classList.add('err'); return; }
+  el.classList.remove('err');
+  el.textContent = LAST_SYNC
+    ? t('sync_updated', {t: pad2(LAST_SYNC.getHours()) + ':' + pad2(LAST_SYNC.getMinutes())})
+    : '';
+}
+// Применяет события API к results: счёт идущих/сыгранных матчей перетирается данными
+// API; прогнозы (p1/p2) и счёт ещё не начатых матчей (ручные симуляции) не трогаются.
+function applyScores(events){
+  let changed = false, anyLive = false;
+  for(const e of events){
+    const id = APP_ID_BY_EVENT[e.id];
+    if(!id) continue;
+    if(!results[id]) results[id] = {s1:'', s2:''};
+    const live = e.st === 'inprogress';
+    if(live) anyLive = true;
+    if(results[id].live !== live){ results[id].live = live; changed = true; }
+    if((e.st === 'finished' || e.st === 'inprogress') && e.hs != null && e.as != null){
+      const s1 = String(e.hs), s2 = String(e.as);
+      if(results[id].s1 !== s1 || results[id].s2 !== s2){ results[id].s1 = s1; results[id].s2 = s2; changed = true; }
+    }
+  }
+  if(changed){
+    invalidateCaches();
+    window.go.main.App.SaveResults(JSON.stringify(results)).catch(console.error);
+    refreshKnockoutTeams();
+    renderAll();
+  } else {
+    updateLiveStates();
+  }
+  return anyLive;
+}
+async function syncScores(manual){
+  if(SYNCING) return;
+  SYNCING = true;
+  const btn = document.getElementById('sync-btn');
+  if(btn) btn.classList.add('busy');
+  try {
+    const events = JSON.parse(await window.go.main.App.FetchScores());
+    HAS_LIVE = applyScores(events);
+    SYNC_DONE = true;
+    updateLiveStates();
+    LAST_SYNC = new Date();
+    SYNC_ERR = false;
+    renderSyncInfo();
+  } catch(e){
+    console.error('sync failed', e);
+    if(manual){ SYNC_ERR = true; renderSyncInfo(); }
+  } finally {
+    SYNCING = false;
+    if(btn) btn.classList.remove('busy');
+  }
+}
+function startSyncLoop(){
+  let tick = 0;
+  setInterval(() => {                       // база 30с: live → каждый тик, иначе раз в 60с
+    tick++;
+    if(HAS_LIVE || tick % 2 === 0) syncScores(false);
+  }, 30000);
+  window.addEventListener('focus', () => syncScores(false));
+}
 
 // ---- INIT ----
 initSettingsUI();
@@ -1035,6 +1159,8 @@ window.addEventListener('DOMContentLoaded', async () => {
   initSettingsUI();
   invalidateCaches();
   renderAll();
+  syncScores(false);   // подтянуть счёт live/сыгранных матчей при открытии
+  startSyncLoop();     // далее — автоопрос (30с при live, иначе 60с) + по фокусу окна
 });
 </script>
 </body>
